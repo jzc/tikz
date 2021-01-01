@@ -1,0 +1,29 @@
+\documentclass[tikz, margin=1in]{standalone}
+
+\usetikzlibrary{calc, arrows.meta, bending}
+
+\definecolor{mygray}{HTML}{aaaaaa}
+
+\begin{document}
+    \begin{tikzpicture}[
+            % color=mygray,  
+            point/.style={radius=1pt},
+            vec/.style={arrows=-Stealth, shorten >=2pt, shorten <=2pt}            
+            ]
+        \path coordinate (u) at ($(2,1) + (120:2)$)
+              coordinate (v) at ($(2,1) + (300:2)$)
+              coordinate (m) at ($(u)!0.5!(v)$);
+
+        \path let \p{uv} = ($(v)-(u)$),
+                  \p{uv'} = ($0.75*(\p{uv})$),
+                  \p{uvOrtho} = (-\y{uv'},\x{uv'}) in
+              coordinate (w1) at ($(m)+(\p{uvOrtho})$)
+              coordinate (w2) at ($(m)-(\p{uvOrtho})$);
+
+        \fill (u) circle[point] node[above left=2pt] {\(u\)};
+        \fill (v) circle[point] node[below right=2pt] {\(v\)};
+        
+        \draw[dash pattern=on 2pt off 2pt] (w1) -- (w2);
+        \draw[loosely dotted] (u) -- (v);
+    \end{tikzpicture}
+\end{document}
